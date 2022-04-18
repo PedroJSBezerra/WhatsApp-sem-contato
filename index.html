@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Sem Contato</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: poppins, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <form id="form">
+        <h1>Whatsapp Sem Contato</h1>
+        <label>
+            <span>Digite ou cole o telefone ex: <br> (00)00000-0000</span><br>
+            <input type="phone" id="phone">
+        </label>
+        <br>
+        <input type="submit" value="Abrir Conversa">
+    </form>
+
+    <script>
+        const form = document.getElementById('form')
+        let phone = document.getElementById('phone')
+        let number = 0
+        let wppUrl = "https://web.whatsapp.com/send?phone=55"
+
+        phone.addEventListener('keyup', (evt) => {
+            let temp = evt.target.value.replace(/\(|\)|\-|\s/g, "")
+            console.log(temp)
+            number = temp
+        })
+
+        form.addEventListener('submit', (evt) => {
+            evt.preventDefault()
+            
+            window.open(wppUrl+number, '_blank')
+        })
+    </script>
+</body>
+</html>
