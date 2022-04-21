@@ -2,10 +2,18 @@
 <html lang="pt-br">
 
 <head>
+
+	<!-- ============= META ================== -->
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- ============= FONTS ================== -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<!-- ============= TITLE =================== -->
 	<title>WhatsApp Sem Contato</title>
+	<!-- ============= STYLES =================== -->
 	<style>
 		* {
 			margin: 0;
@@ -14,8 +22,14 @@
 		}
 
 		body {
+			height: 100%;
+			width: 100%;
+			position: absolute;
 			font-family: poppins, sans-serif;
-			background: url('wpp-background_1366x768.jpg') no-repeat fixed center;
+			background: -webkit-image-set(
+					url("wpp-background_1366x768.avif") 1x, 
+					url("wpp-background_1366x768.jpg") 1x
+				) no-repeat fixed center;
 			background-size: cover;
 			color: #fff;
 			display: grid;
@@ -24,24 +38,33 @@
 
 		#form {
 			background: #009688;
-			border-radius: 10px;
-			max-width: 280px;
+			border-radius: 6px;
 			padding: 10px;
-			position: absolute;
-			top: 50%;
-			transform: translateY(-50%);
 			box-shadow: 4px 6px 8px #333;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			transition: all .2s ease-in;
 		}
 
 		#form > * {
 			margin: 6px 0;
 		}
 
+		#form h1 {
+			font-size: 1.4rem;
+			text-align: center;
+			margin-bottom: 40px;
+		}
+
 		input[type="phone"] {
-			border-radius: 4px;
 			font-size: 1.2rem;
 			padding: 10px;
 			max-width: 100%;
+		}
+
+		input[type="phone"]::placeholder {
+			color: rgba(0 0 0 / 20%);
 		}
 
 		input[type="submit"] {
@@ -53,6 +76,8 @@
 </head>
 
 <body>
+	<div class="welcome">Bem vindo(a) ao meu App!</div>
+	<div class="device"></div>
 	<form id="form">
 		<h1>Whatsapp Sem Contato</h1>
 		<label for="phone">
@@ -64,26 +89,38 @@
 	</form>
 
 	<footer>
-		Developed w💓 by PedroJSBezerra 
+		Developed w💓 by PedroJSDev 
 	</footer>
 
 	<script>
+		//primeiro carregamento
 		window.onload = () => {
-			redirect()
-		}
-
-		function redirect(){
+			//variaveis globais
 			const form = document.getElementById('form')
 			let phone = document.getElementById('phone')
+			let device = document.querySelector('.device')
 			let number = 0
-			const wppUrl = "https://web.whatsapp.com/send?phone=55"
+			const desktopUrl = "https://web.whatsapp.com/send?phone=55"
+			const mobileUrl = "https://api.whatsapp.com/send?phone=55"
+			let wppUrl
 
+			// testa se o dispositivo é mobile
+			if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+				// true for mobile device
+				device.innerHTML = "Dispositivo Móvel"
+				wppUrl = mobileUrl
+			}else{
+				// false for not mobile device
+				device.innerHTML = "Dispositivo Desktop"
+				wppUrl = desktopUrl
+			}
+			//substitui o number e remove caracteres ao digitar
 			phone.addEventListener('keyup', (evt) => {
 				let temp = evt.target.value.replace(/\(|\)|\-|\s/g, "")
 				console.log(temp)
 				number = temp
 			})
-
+			//funcao de envio redirect
 			form.addEventListener('submit', (evt) => {
 				evt.preventDefault()
 				if(number == "") {
@@ -96,11 +133,6 @@
 				}
 				window.open(wppUrl + number, '_blank')
 			})
-		}
-
-		function animation(){
-			const form = document.getElementById('form')
-
 		}
 	</script>
 </body>
