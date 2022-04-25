@@ -1,0 +1,30 @@
+@media screen and (min-width: 700px) {
+  body {
+    display: grid;
+    grid-template-columns: 1.5fr 8fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+      "h m"
+    ;
+  }
+
+  div.nav__button {
+    display: none;
+  }
+  
+  .header {
+    grid-area: h;
+    height: 100%;
+  }
+
+  ul.nav__menu {
+    transform: translateX(0);
+    position: relative;
+  }
+  
+  .main {
+    grid-area: m;
+    height: 100%;
+  }
+  
+}

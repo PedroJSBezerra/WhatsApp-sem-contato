@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-
 	<!-- ============= META ================== -->
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,130 +9,59 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+	<!-- ============= ICON =================== -->
+	<link rel = "icon" type = "image/svg" href = "/favicon.svg">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<!-- ============= TITLE =================== -->
 	<title>WhatsApp Sem Contato</title>
 	<!-- ============= STYLES =================== -->
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-
-		body {
-			height: 100%;
-			width: 100%;
-			position: absolute;
-			font-family: poppins, sans-serif;
-			background: -webkit-image-set(
-					url("wpp-background_1366x768.avif") 1x, 
-					url("wpp-background_1366x768.jpg") 1x
-				) no-repeat fixed center;
-			background-size: cover;
-			color: #fff;
-			display: grid;
-			place-items: center;
-		}
-
-		#form {
-			background: #009688;
-			border-radius: 6px;
-			padding: 10px;
-			box-shadow: 4px 6px 8px #333;
-			display: flex;
-			align-items: center;
-			flex-direction: column;
-			transition: all .2s ease-in;
-		}
-
-		#form > * {
-			margin: 6px 0;
-		}
-
-		#form h1 {
-			font-size: 1.4rem;
-			text-align: center;
-			margin-bottom: 40px;
-		}
-
-		input[type="phone"] {
-			font-size: 1.2rem;
-			padding: 10px;
-			max-width: 100%;
-		}
-
-		input[type="phone"]::placeholder {
-			color: rgba(0 0 0 / 20%);
-		}
-
-		input[type="submit"] {
-			min-width: 100%;
-			min-height: 60px;
-			font-size: 1.2rem;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style-desktop.css">
+	<link rel="stylesheet" href="nav-button.css">
 </head>
 
 <body>
-	<div class="welcome">Bem vindo(a) ao meu App!</div>
-	<div class="device"></div>
-	<form id="form">
-		<h1>Whatsapp Sem Contato</h1>
-		<label for="phone">
-			<span>Digite ou cole o telefone 👇.</span><br>
-		</label>
-		<input placeholder="(00)0000-0000" type="phone" id="phone">
-		<br>
-		<input type="submit" value="Abrir Conversa">
-	</form>
 
-	<footer>
-		Developed w💓 by PedroJSDev 
-	</footer>
+	<header class="header">
+		<div class="nav__button"><span></span></div>
+		<ul class="nav__menu">
+			<li><a href="#">Inicio</a></li>
+			<li><a href="#">Contactless Zap</a></li>
+			<li><a href="#">Contato</a></li>
+			<li><a href="#">Sobre</a></li>
+		</ul>
+	</header>
 
+
+	<main class="main">
+		<div class="app">
+	
+			<div class="welcome box">
+				<h1>Whatsapp Sem Contato</h1>
+				<div class="device"></div>
+			</div>
+			
+			<form id="form" class="box">
+				<label for="phone">
+					<span>Digite ou cole o telefone 👇.</span><br>
+				</label>
+				<input placeholder="(00)0000-0000" inputmode="numeric" type="phone" id="phone">
+				<br>
+				<input type="submit" value="Abrir Conversa">
+			</form>
+
+		</div>
+	</main>
+	
 	<script>
-		//primeiro carregamento
-		window.onload = () => {
-			//variaveis globais
-			const form = document.getElementById('form')
-			let phone = document.getElementById('phone')
-			let device = document.querySelector('.device')
-			let number = 0
-			const desktopUrl = "https://web.whatsapp.com/send?phone=55"
-			const mobileUrl = "https://api.whatsapp.com/send?phone=55"
-			let wppUrl
-
-			// testa se o dispositivo é mobile
-			if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-				// true for mobile device
-				device.innerHTML = "Dispositivo Móvel"
-				wppUrl = mobileUrl
-			}else{
-				// false for not mobile device
-				device.innerHTML = "Dispositivo Desktop"
-				wppUrl = desktopUrl
-			}
-			//substitui o number e remove caracteres ao digitar
-			phone.addEventListener('keyup', (evt) => {
-				let temp = evt.target.value.replace(/\(|\)|\-|\s/g, "")
-				console.log(temp)
-				number = temp
-			})
-			//funcao de envio redirect
-			form.addEventListener('submit', (evt) => {
-				evt.preventDefault()
-				if(number == "") {
-					window.alert("Por favor digite um número!")
-					return
-				}
-				if(number.length < 10) {
-					window.alert("Digite um número ex: (ddd)+0000-0000")
-					return
-				}
-				window.open(wppUrl + number, '_blank')
-			})
-		}
+		const navButton = document.querySelector(".nav__button")
+		const navMenu = document.querySelector(".nav__menu")
+		
+		navButton.addEventListener('click', (e) => {
+			navButton.classList.toggle("nav__button--close")
+			navMenu.classList.toggle("nav__menu--close")
+		})
 	</script>
+	<script src="script.js"></script>
 </body>
-
 </html>
